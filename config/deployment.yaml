@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: myapp-demo
   labels:
     app: myapp
 spec:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: myapp:latest
+          image: silverbulllet/myapp-demo:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 3000
