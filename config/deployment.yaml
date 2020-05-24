@@ -17,7 +17,7 @@ spec:
       containers:
         - name: myapp
           image: silverbulllet/myapp-demo:latest
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
               protocol: TCP

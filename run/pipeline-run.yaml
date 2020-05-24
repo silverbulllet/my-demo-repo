@@ -1,0 +1,23 @@
+#NAMESPACE='catapp'
+#URL='https://github.com/silverbulllet/myapp-demo-2.git'
+#REVISION='master'
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: myapp-demo-kaniko-pipelinerun
+  namespace: default
+  labels:
+    app: tekton-app
+    tekton.dev/pipeline: myapp-demo-kaniko
+spec:
+  serviceAccountName: admin
+  pipelineRef:
+    name: myapp-demo-kaniko
+  resources:
+  - name: source
+    resourceRef:
+      name: myapp-demo-git
+  params:
+  - name: BUILDER_IMAGE
+    value: registry.cn-hangzhou.aliyuncs.com/silverbulllet/myapp-demo:0.0.1

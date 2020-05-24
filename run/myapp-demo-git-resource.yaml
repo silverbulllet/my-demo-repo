@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: myapp-demo-git-resource
+  namespace: default
+spec:
+  params:
+  - name: url
+    value: https://github.com/silverbulllet/myapp-demo
+  - name: revision
+    value: master
+  type: git

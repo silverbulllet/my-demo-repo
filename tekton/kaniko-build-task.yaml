@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: build-docker
+  name: kaniko-build
 spec:
   inputs:
     resources:
@@ -18,23 +18,20 @@ spec:
         description: The image on which builds will run
         default: silverbulllet/myapp-demo:latest
   steps:
-    - name: docker
-      image: docker
+    - name: kaniko-build
       workingDir: /workspace/source
-      command: ["docker"]
+      image: gcr.io/kaniko-project/executor:latest
       args:
-        - build
-        - -f
-        - $(inputs.params.DOCKERFILE)
-        - -t
-        - $(inputs.params.BUILDER_IMAGE)
-        - $(inputs.params.CONTEXT)
+        - --dockerfile=$(inputs.params.DOCKERFILE)
+        - --destination=$(inputs.params.BUILDER_IMAGE)
+        - --context=$(inputs.params.CONTEXT)
       volumeMounts:
-        - name: docker-socket
-          mountPath: /var/run/docker.sock
-        - name: docker-library
-          mountPath: /var/lib/docker
+        - name: docker-config
+          mountPath: /kaniko/.docker/
   volumes:
+    - name: docker-config
+      configMap:
+        name: docker-config
     - name: docker-socket
       hostPath:
         path: /var/run/docker.sock

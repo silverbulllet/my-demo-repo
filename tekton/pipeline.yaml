@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: Pipeline
 metadata:
-  name: myapp-demo
+  name: myapp-demo-kaniko
 spec:
   params:
     - name: BUILDER_IMAGE
@@ -13,7 +13,7 @@ spec:
   tasks:
     - name: build
       taskRef:
-        name: build-docker
+        name: kaniko-build
       params:
         - name: BUILDER_IMAGE
           value: $(params.BUILDER_IMAGE)
